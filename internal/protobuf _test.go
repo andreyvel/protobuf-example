@@ -45,7 +45,11 @@ func TestMarshalToFile(t *testing.T) {
 		log.Fatal(err)
 	}
 	defer fileOut.Close()
-	fileOut.Write(dataOut)
+
+	_, err = fileOut.Write(dataOut)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	fileName := fileOut.Name()
 	dataIn, err := os.ReadFile(fileName)
