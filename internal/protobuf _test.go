@@ -14,13 +14,13 @@ import (
 
 func TestDecoder(t *testing.T) {
 	var msgV1 = getMsgV1()
-	dataV1, err := proto.Marshal(&msgV1)
+	dataV1, err := proto.Marshal(msgV1)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var msgV2 = getMsgV2()
-	dataV2, err := proto.Marshal(&msgV2)
+	dataV2, err := proto.Marshal(msgV2)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func TestDecoder(t *testing.T) {
 func TestMarshalToFile(t *testing.T) {
 	var msgV1 = getMsgV1()
 
-	dataOut, err := proto.Marshal(&msgV1)
+	dataOut, err := proto.Marshal(msgV1)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func TestMarshalToFile(t *testing.T) {
 	assert.Equal(t, msgV1.String(), msgOut.String())
 }
 
-func getMsgV1() impl_v1.Message {
+func getMsgV1() *impl_v1.Message {
 	var msg = impl_v1.Message{
 		Id:          3333,
 		Name:        "John Doe",
@@ -69,10 +69,10 @@ func getMsgV1() impl_v1.Message {
 		Phones:      []*impl_v1.Message_PhoneNumber{{Type: impl_v1.Message_MOBILE, Number: "333-12345"}},
 		LastUpdated: timestamppb.Now(),
 	}
-	return msg
+	return &msg
 }
 
-func getMsgV2() impl_v2.Message {
+func getMsgV2() *impl_v2.Message {
 	var msg = impl_v2.Message{
 		Id:          5555,
 		Name:        "John Doe",
@@ -81,7 +81,7 @@ func getMsgV2() impl_v2.Message {
 		LastUpdated: timestamppb.Now(),
 		Desc:        "desc",
 	}
-	return msg
+	return &msg
 }
 
 func decodeV1(data []byte) {
@@ -89,7 +89,7 @@ func decodeV1(data []byte) {
 	if err := proto.Unmarshal(data, &msgV1); err != nil {
 		log.Fatalln(err)
 	}
-	printObj(msgV1)
+	printObj(&msgV1)
 }
 
 func decodeV2(data []byte) {
@@ -97,7 +97,7 @@ func decodeV2(data []byte) {
 	if err := proto.Unmarshal(data, &msg); err != nil {
 		log.Fatalln(err)
 	}
-	printObj(msg)
+	printObj(&msg)
 }
 
 func printObj(msg any) {

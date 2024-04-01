@@ -9,7 +9,7 @@ import (
 
 func TestProtojson(t *testing.T) {
 	var msgV1 = getMsgV1()
-	data, err := protojson.Marshal(&msgV1)
+	data, err := protojson.Marshal(msgV1)
 	if err != nil {
 		log.Fatal(err)
 	}

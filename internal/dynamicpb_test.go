@@ -24,7 +24,7 @@ func TestDynamicpb(t *testing.T) {
 	schemaPath := "../schemas"
 	var msgV1 = getMsgV1()
 
-	dataOut, err := proto.Marshal(&msgV1)
+	dataOut, err := proto.Marshal(msgV1)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func TestDynamicpb(t *testing.T) {
 	decodeAndPrint(dataOut, "User", schemaPath, "user.proto")
 
 	var msgV2 = getMsgV2()
-	dataOut, err = proto.Marshal(&msgV2)
+	dataOut, err = proto.Marshal(msgV2)
 	if err != nil {
 		log.Fatal(err)
 	}
