@@ -23,7 +23,7 @@ func TestProtojson(t *testing.T) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		printObj(msgOut)
+		printObj(&msgOut)
 	}
 
 	{
@@ -33,6 +33,6 @@ func TestProtojson(t *testing.T) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		printObj(msgOut)
+		printObj(&msgOut)
 	}
 }
