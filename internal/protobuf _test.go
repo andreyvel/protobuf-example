@@ -83,7 +83,7 @@ func getMsgV2() *impl_v2.Message {
 		Email:       "jdoe@example.com",
 		Phones:      []*impl_v2.Message_PhoneNumber{{Type: impl_v2.Message_MOBILE, Number: "555-12345"}},
 		LastUpdated: timestamppb.Now(),
-		Desc:        "desc",
+		Desc:        "desc++++",
 	}
 	return &msg
 }
