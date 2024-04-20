@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -35,7 +34,7 @@ func TestDecoder(t *testing.T) {
 func TestMarshalToFile(t *testing.T) {
 	var msgV1 = getMsgV1()
 
-	dataOut, err := proto.Marshal(msgV1)
+	dataBin, err := proto.Marshal(msgV1)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,7 +45,7 @@ func TestMarshalToFile(t *testing.T) {
 	}
 	defer fileOut.Close()
 
-	_, err = fileOut.Write(dataOut)
+	_, err = fileOut.Write(dataBin)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -70,7 +69,6 @@ func getMsgV1() *impl_v1.Message {
 		Id:          3333,
 		Name:        "John Doe",
 		Email:       "jdoe@example.com",
-		Phones:      []*impl_v1.Message_PhoneNumber{{Type: impl_v1.Message_MOBILE, Number: "333-12345"}},
 		LastUpdated: timestamppb.Now(),
 	}
 	return &msg
@@ -81,9 +79,9 @@ func getMsgV2() *impl_v2.Message {
 		Id:          5555,
 		Name:        "John Doe",
 		Email:       "jdoe@example.com",
-		Phones:      []*impl_v2.Message_PhoneNumber{{Type: impl_v2.Message_MOBILE, Number: "555-12345"}},
 		LastUpdated: timestamppb.Now(),
-		Desc:        "desc++++",
+		NewField1:   "NewField1*",
+		NewField2:   "NewField2*",
 	}
 	return &msg
 }
@@ -102,12 +100,4 @@ func decodeV2(data []byte) {
 		log.Fatalln(err)
 	}
 	printObj(&msg)
-}
-
-func printObj(msg any) {
-	jsonV1, err := json.Marshal(msg)
-	if err != nil {
-		log.Fatal(err)
-	}
-	println(string(jsonV1))
 }

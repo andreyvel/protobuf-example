@@ -16,37 +16,32 @@ import (
 	"testing"
 )
 
-/*
-Source:
-https://pkg.go.dev/google.golang.org/protobuf/types/dynamicpb
-*/
-func TestDynamicpb(t *testing.T) {
-	schemaPath := "../schemas"
+var schemaPath = "../schemas"
+
+func TestProtoDesc(t *testing.T) {
 	var msgV1 = getMsgV1()
 
-	dataOut, err := proto.Marshal(msgV1)
+	dataBin, err := proto.Marshal(msgV1)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	println("--------------------------------------------------------------")
 	printObj(msgV1)
-	decodeAndPrint(dataOut, "Message", schemaPath, "msg-v1.proto")
-	decodeAndPrint(dataOut, "Message", schemaPath, "msg-v2.proto")
-	decodeAndPrint(dataOut, "User", schemaPath, "user.proto")
+	decodeAndPrint(dataBin, "Message", schemaPath, "msg-v1.proto")
+	decodeAndPrint(dataBin, "Message", schemaPath, "msg-v2.proto")
 
 	var msgV2 = getMsgV2()
-	dataOut, err = proto.Marshal(msgV2)
+	dataBin, err = proto.Marshal(msgV2)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	println("--------------------------------------------------------------")
 	printObj(msgV2)
-	decodeAndPrint(dataOut, "Message", schemaPath, "msg-v1.proto")
-	decodeAndPrint(dataOut, "Message", schemaPath, "msg-v2.proto")
-	decodeAndPrint(dataOut, "User", schemaPath, "user.proto")
+	decodeAndPrint(dataBin, "Message", schemaPath, "msg-v1.proto")
+	decodeAndPrint(dataBin, "Message", schemaPath, "msg-v2.proto")
+}
 
+func TestReflection(t *testing.T) {
 	protoFile := "msg-v1.proto"
 	registry, err := createProtoRegistry(schemaPath, protoFile)
 	if err != nil {
@@ -73,7 +68,7 @@ func TestDynamicpb(t *testing.T) {
 	}
 }
 
-func decodeAndPrint(dataOut []byte, typeName string, schemaPath string, protoFile string) {
+func decodeAndPrint(dataBin []byte, typeName string, schemaPath string, protoFile string) {
 	registry, err := createProtoRegistry(schemaPath, protoFile)
 	if err != nil {
 		log.Fatal(err)
@@ -92,7 +87,7 @@ func decodeAndPrint(dataOut []byte, typeName string, schemaPath string, protoFil
 	}
 
 	msg := dynamicpb.NewMessage(messageDesc)
-	err = proto.Unmarshal(dataOut, msg)
+	err = proto.Unmarshal(dataBin, msg)
 	if err != nil {
 		log.Fatal(err)
 	}
