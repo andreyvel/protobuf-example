@@ -1,0 +1,23 @@
+syntax = "proto3";
+package api.v1;
+
+message MessageInner {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message MsgPack1 {
+  MessageInner msg = 1;
+  string id = 2;
+}
+
+message MsgPack2 {
+  bytes msg = 1;
+  string id = 2;
+}
+
+message MsgPack3 {
+  string msg = 1;
+  string id = 2;
+}
