@@ -25,6 +25,8 @@ protoc --proto_path=./schemas --go_out=. --go_opt=Mmsg-v1.proto=impl.v1 msg-v1.p
 protoc --proto_path=./schemas --go_out=. --go_opt=Mmsg-v2.proto=impl.v2 msg-v2.proto
 
 protoc --proto_path=./schemas --go_out=. --go_opt=Mmsg-pack.proto=impl.v1 msg-pack.proto
+protoc --proto_path=./schemas --go_out=. --go_opt=Mmsg-cast.proto=impl.v1 msg-cast.proto
+
 ```
 
 ## Generate descriptor
