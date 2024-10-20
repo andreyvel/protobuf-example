@@ -13,5 +13,5 @@ message MsgCast2 {
 
 message MsgCast3 {
   string col1 = 1;
-  string col2 = 2;
+  int32 col2 = 2;
 }
